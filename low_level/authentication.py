@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-
-import ConfigParser
+import configparser
 import os
 import sqlite3
 
@@ -68,7 +67,7 @@ class ChromiumSessionCookieAuth(AuthBase):
         decrypted = cipher.decrypt(encrypted[3:])
 
         # Strip away left-over bytes.
-        return decrypted[:-ord(decrypted[-1])] 
+        return decrypted[:-ord(decrypted[-1])]
 
 
 
@@ -93,7 +92,7 @@ class FirefoxSessionCookieAuth(object):
 
     @staticmethod
     def __find_default_profile_path(ini_path):
-        parser = ConfigParser.SafeConfigParser()
+        parser = configparser.SafeConfigParser()
         parser.read(ini_path)
         for section in parser.sections():
             if parser.has_option(section, 'Default'):
@@ -103,7 +102,7 @@ class FirefoxSessionCookieAuth(object):
                         path = os.path.join(os.path.dirname(ini_path), path)
 
                     return os.path.abspath(os.path.expanduser(path))
-                except ConfigParser.NoOptionError:
+                except configparser.NoOptionError:
                     pass
 
     @staticmethod
@@ -114,4 +113,3 @@ class FirefoxSessionCookieAuth(object):
         rows = cursor.execute('SELECT value FROM moz_cookies WHERE name == "{name}"'.format(name=name))
         value = next(rows)[0]
         return value
-

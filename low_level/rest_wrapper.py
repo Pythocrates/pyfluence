@@ -24,12 +24,12 @@ class RESTWrapper(object):
     def __call__(self, **kwargs):
         try:
             request_function = {
-                'GET': self.__session.get,        
+                'GET': self.__session.get,
                 'POST': self.__session.post,
                 'PUT': self.__session.put,
                 'DELETE': self.__session.delete,
             }[self.__path[-1]]
-        except KeyError, ke:
+        except KeyError:
             raise UnknownHTTPRequestError(self.__path[-1])
         else:
             response = request_function(http_request_uri='/'.join([self.__host] + self.__path[:-1]), **kwargs)
@@ -40,10 +40,9 @@ class RESTWrapper(object):
                 raise
 
         return response
-    
+
     def read_from_path(self, path):
         return self.__session.read(url=self.__host + path)
 
     def download(self, url, file_path):
         return self.__session.download(url, file_path)
-

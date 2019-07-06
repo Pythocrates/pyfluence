@@ -1,19 +1,20 @@
 # -*- coding: utf-8 -*-
 
-
 from bs4 import BeautifulSoup
 
 
 class Cell(list):
-    class Text(object):
+    class Text:
         def __init__(self, text):
+            super().__init__()
             self.__text = text
 
         def html(self, soup):
             return self.__text
 
-    class Link(object):
+    class Link:
         def __init__(self, ref, name):
+            super().__init__()
             self.__ref = ref
             self.__name = name
 
@@ -34,9 +35,9 @@ class Cell(list):
         return self
 
 
-class HTMLTable(object):
+class HTMLTable:
     def __init__(self, header, *args, **kwargs):
-        super(HTMLTable, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.__header = header
         self.__body = list()
 

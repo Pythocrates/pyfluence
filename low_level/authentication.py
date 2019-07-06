@@ -17,7 +17,7 @@ class ChromiumSessionCookieAuth(AuthBase):
     token_names = ['seraph.confluence', 'crowd.token_key']
 
     def __init__(self, *args, **kwargs):
-        super(ChromiumSessionCookieAuth, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.__cookies = dict((name, self.__obtain_token_key_from_chromium(name=name)) for name in self.token_names)
 
     def __call__(self, request):
@@ -71,13 +71,13 @@ class ChromiumSessionCookieAuth(AuthBase):
 
 
 
-class FirefoxSessionCookieAuth(object):
+class FirefoxSessionCookieAuth:
     '''Uses a Firefox session for authentication.'''
 
     token_name = 'seraph.confluence'
 
     def __init__(self, *args, **kwargs):
-        super(FirefoxSessionCookieAuth, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.__obtain_token_key_from_firefox()
 
     def __call__(self, request):

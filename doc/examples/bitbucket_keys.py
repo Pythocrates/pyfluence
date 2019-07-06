@@ -13,7 +13,7 @@ from pyfluence.application import BitbucketApplication
 class BitBucketKeys(BitbucketApplication):
 
     def build_parser(self):
-        super(BitBucketKeys, self).build_parser()
+        super().build_parser()
 
     def run(self):
         for value in self.bitbucket.raw_ssh.keys.GET().json()['values']:

@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-
 from .exceptions import UnknownHTTPRequestError
 
 
-class RESTWrapper(object):
+class RESTWrapper:
     def __init__(self, host, path, session, *args, **kwargs):
-        super(RESTWrapper, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.__host = host
         self.__path = path
         self.__session = session

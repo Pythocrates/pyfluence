@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 from argparse import ArgumentParser
 
 
-class Application(object):
+class Application(ABC):
     '''
     This is the base class for Confluence applications coming with the basic
     available authentication options.
     '''
-    __metaclass__ = ABCMeta
-
     def __init__(self, *args, **kwargs):
-        super(Application, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.build_parser()
         # TODO: remove args -> property is defined below
         args = self._args = self.parser.parse_args()

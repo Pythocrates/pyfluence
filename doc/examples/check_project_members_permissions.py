@@ -22,7 +22,7 @@ logger.setLevel(logging.DEBUG)
 
 class GroupMembershipReporter(WikiApplication):
     def build_parser(self):
-        super(GroupMembershipReporter, self).build_parser()
+        super().build_parser()
         self.parser.add_argument(
             '-P', '--prefix', type=str,
             help='the prefix of the groups to be consulted', required=True)

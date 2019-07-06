@@ -9,13 +9,13 @@ from .authentication import ChromiumSessionCookieAuth, FirefoxSessionCookieAuth
 from .rest_wrapper import RESTWrapper
 
 
-class Session(object):
+class Session:
     def __init__(self, host, auth, subdomains, *args, **kwargs):
         '''
         subdomains map the functionality to the subdomain namem e.g.
         {'bitbucket': 'bitbucket'}
         '''
-        super(Session, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.__session = requests.Session()
         self.__session.auth = auth()
         # TODO: resolve subdomain + host
@@ -41,11 +41,11 @@ class Session(object):
             path=['rest', 'api'],
             session=self)
 
-    bitbucket = property(lambda self : self.__bitbucket)
-    bitbucket_keys = property(lambda self : self.__bitbucket_keys)
-    bitbucket_ssh = property(lambda self : self.__bitbucket_ssh)
-    jira = property(lambda self : self.__jira)
-    wiki = property(lambda self : self.__wiki)
+    bitbucket = property(lambda self: self.__bitbucket)
+    bitbucket_keys = property(lambda self: self.__bitbucket_keys)
+    bitbucket_ssh = property(lambda self: self.__bitbucket_ssh)
+    jira = property(lambda self: self.__jira)
+    wiki = property(lambda self: self.__wiki)
 
     @classmethod
     def from_firefox(cls):

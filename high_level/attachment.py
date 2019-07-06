@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-
 import json
 
 
-class Attachment(object):
+class Attachment:
     def __init__(self, id_, api, *args, **kwargs):
-        super(Attachment, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.__id = id_
         self.__api = api
         self.__request_base = self.__api.content[self.__id]
@@ -67,6 +66,3 @@ class Attachment(object):
     def download(self, file_path):
         url = self.__api.host + self.__response.json()['_links']['download']
         self.__api.download(url=url, file_path=file_path)
-
-
-

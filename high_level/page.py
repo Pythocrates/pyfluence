@@ -14,7 +14,7 @@ def normalize(text):
     return ucd_norm('NFKC', text)
 
 
-class Page(object):
+class Page:
     '''Page represents a Confluence wiki page.
     Page provides easy access to contents and related features of a wiki page.
 
@@ -31,7 +31,7 @@ class Page(object):
         :param parent: The parent of the new page.
         :type parent: :class:`~pyfluence.high_level.page.Page` or :class:`~pyfluence.high_level.space.Space`
         '''
-        super(Page, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.__id = id_
         self.__api = api
         self.__request_base = self.__api.content[self.__id]

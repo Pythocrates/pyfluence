@@ -3,9 +3,9 @@
 from ..low_level.session import Session
 
 
-class App(object):
+class App:
     def __init__(self, session, *args, **kwargs):
-        super(App, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.__session = session
 
     @property

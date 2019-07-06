@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-
 from bs4 import BeautifulSoup
 
 
-class Table(object):
+class Table:
     def __init__(self, header, header_vertical=False, *args, **kwargs):
-        super(Table, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.__header = list(header)
         self.__header_vertical = header_vertical
         self.__body = list()

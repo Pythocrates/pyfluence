@@ -1,0 +1,2 @@
+from bitbucket_application import BitbucketApplication
+from wiki_application import WikiApplication

@@ -7,6 +7,7 @@ low-level wiki wrapper.
 The input and output is quite raw and requires some knowledge of the REST API.
 '''
 
+import os
 from pprint import pprint
 
 from pyfluence import Session
@@ -15,12 +16,16 @@ from pyfluence import Session
 if __name__ == '__main__':
 
     # Use of the REST API:
-    session = Session.from_chromium()
+    session = Session.from_kerberos(
+        host=os.environ['CONFLUENCE_HOSTNAME'],
+        subdomains={
+            'wiki': 'confluence'
+        })
     wiki = session.wiki
 
     pprint(wiki.content.GET().json())
     pprint(wiki.space.GET().json())
-    pprint(wiki.space.PROJECT.GET().text)
+    pprint(wiki.space.ILF.GET().text)
     pprint(wiki.space.PROJECT.GET().json())
     pprint(wiki.space.PROJECT.property.GET().json())
     pprint(wiki.space.PROJECT.content.GET().json())

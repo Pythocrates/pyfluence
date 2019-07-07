@@ -15,7 +15,7 @@ from .rest_wrapper import RESTWrapper
 
 
 class Session:
-    def __init__(self, host, auth, subdomains, *args, **kwargs):
+    def __init__(self, host, auth, subdomains=None, *args, **kwargs):
         '''
         subdomains map the functionality to the subdomain namem e.g.
         {'bitbucket': 'bitbucket'}
@@ -24,6 +24,7 @@ class Session:
         self.__session = requests.Session()
         self.__session.auth = auth()
         self.__session.verify = False  # TODO: change this?
+        subdomains = subdomains or {}
 
         # TODO: resolve subdomain + host
         # TODO: refactoring: move specific URLs out of Session
@@ -70,17 +71,17 @@ class Session:
     wiki = property(lambda self: self.__wiki)
 
     @classmethod
-    def from_firefox(cls, host, subdomains):
+    def from_firefox(cls, host, subdomains=None):
         return cls(
             host=host, subdomains=subdomains, auth=FirefoxSessionCookieAuth)
 
     @classmethod
-    def from_chromium(cls, host, subdomains):
+    def from_chromium(cls, host, subdomains=None):
         return cls(
             host=host, subdomains=subdomains, auth=ChromiumSessionCookieAuth)
 
     @classmethod
-    def from_kerberos(cls, host, subdomains):
+    def from_kerberos(cls, host, subdomains=None):
         return cls(
             host=host,
             subdomains=subdomains,
@@ -88,7 +89,7 @@ class Session:
             auth=KerberosSessionCookieAuth)
 
     @classmethod
-    def from_functional_user(cls, host, subdomains, username, password):
+    def from_functional_user(cls, host, username, password, subdomains=None):
         return cls(
             host=host,
             subdomains=subdomains,
@@ -101,7 +102,7 @@ class Session:
     def __compile_uri(base, **kwargs):
         if kwargs:
             return base + '?' + '&'.join(
-                '{k}={v}'.format(k=k, v=v) for k, v in kwargs.iteritems())
+                '{k}={v}'.format(k=k, v=v) for k, v in kwargs.items())
         else:
             return str(base)
 

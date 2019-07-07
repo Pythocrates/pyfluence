@@ -12,7 +12,7 @@ from .app import App
 class Wiki(App):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.__confluence = self.session.confluence
+        self.__confluence = self.session.wiki
 
     @property
     def raw(self):

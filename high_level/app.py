@@ -13,19 +13,24 @@ class App:
         return self.__session
 
     @classmethod
-    def from_chromium(cls):
-        session = Session.from_chromium()
+    def from_chromium(cls, host):
+        session = Session.from_chromium(host=host)
         return cls.from_session(session=session)
 
     @classmethod
-    def from_firefox(cls):
-        session = Session.from_firefox()
+    def from_firefox(cls, host):
+        session = Session.from_firefox(host=host)
         return cls.from_session(session=session)
 
     @classmethod
-    def from_functional_user(cls, username, password):
+    def from_kerberos(cls, host):
+        session = Session.from_kerberos(host=host)
+        return cls.from_session(session=session)
+
+    @classmethod
+    def from_functional_user(cls, username, password, host):
         session = Session.from_functional_user(
-            username=username, password=password)
+            username=username, password=password, host=host)
         return cls(session=session)
 
     @classmethod

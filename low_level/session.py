@@ -3,8 +3,8 @@
 from functools import partial
 import shutil
 
+from http.cookiejar import CookiePolicy
 import requests
-import requests_kerberos
 
 from .authentication import (
     ChromiumSessionCookieAuth,
@@ -15,6 +15,19 @@ from .rest_wrapper import RESTWrapper
 
 
 class Session:
+    class NoCookies(CookiePolicy):
+        ''' A cookie policy blocking any cookies, thus enabling us to
+        use request.prepare_cookies, which does not overwrite existing
+        cookie headers.
+        Look for "How to disable cookie handling with the Python requests
+        library" on StackOverflow. No copy/paste with Exceed & Citrix...
+        '''
+        def set_ok(self, cookie, request):
+            return False
+
+        rfc2965 = False
+        netscape = True
+
     def __init__(self, host, auth, subdomains=None, *args, **kwargs):
         '''
         subdomains map the functionality to the subdomain namem e.g.
@@ -23,6 +36,7 @@ class Session:
         super().__init__(*args, **kwargs)
         self.__session = requests.Session()
         self.__session.auth = auth()
+        self.__session.cookies.set_policy(self.NoCookies())
         self.__session.verify = False  # TODO: change this?
         subdomains = subdomains or {}
 

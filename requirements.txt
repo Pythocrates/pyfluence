@@ -12,7 +12,7 @@ Naked==0.1.31
 pycparser==2.19
 pycrypto==2.6.1
 pykerberos==1.2.1
-PyYAML==5.1.1
+PyYAML==5.1.2
 requests==2.22.0
 requests-kerberos==0.12.0
 SecretStorage==3.1.1

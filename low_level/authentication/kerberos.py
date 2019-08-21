@@ -9,10 +9,12 @@ from ...exception import AuthenticationError
 
 
 class KerberosSessionCookieAuth:
-    def __init__(self, *args, **kwargs):
+    def __init__(self, subdomain, *args, **kwargs):
         super().__init__(*args, **kwargs)
         r = requests.get(
-            'https://confluence.{}'.format(os.environ['CONFLUENCE_HOSTNAME']),
+            'https://{}.{}'.format(
+                subdomain,
+                os.environ['CONFLUENCE_HOSTNAME']),
             auth=requests_kerberos.HTTPKerberosAuth(),
             verify=False,
         )

@@ -95,12 +95,16 @@ class Session:
             host=host, subdomains=subdomains, auth=ChromiumSessionCookieAuth)
 
     @classmethod
-    def from_kerberos(cls, host, subdomains=None):
+    def from_kerberos(cls, host, auth_subdomain, subdomains=None):
+        '''
+        Negotiate using Kerberos. auth_subdomain determines which subdomain
+        does the authentication.
+        '''
         return cls(
             host=host,
             subdomains=subdomains,
             #auth=requests_kerberos.HTTPKerberosAuth)
-            auth=KerberosSessionCookieAuth)
+            auth=partial(KerberosSessionCookieAuth, subdomain=auth_subdomain))
 
     @classmethod
     def from_functional_user(cls, host, username, password, subdomains=None):

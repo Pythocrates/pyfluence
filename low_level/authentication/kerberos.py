@@ -5,6 +5,8 @@ import os
 import requests
 import requests_kerberos
 
+from ...exception import AuthenticationError
+
 
 class KerberosSessionCookieAuth:
     def __init__(self, *args, **kwargs):
@@ -14,7 +16,10 @@ class KerberosSessionCookieAuth:
             auth=requests_kerberos.HTTPKerberosAuth(),
             verify=False,
         )
-        self.__cookies = {'JSESSIONID': r.cookies['JSESSIONID']}
+        try:
+            self.__cookies = {'JSESSIONID': r.cookies['JSESSIONID']}
+        except KeyError:
+            raise AuthenticationError('Kerberos authentication failed.')
 
     def __call__(self, request):
         request.prepare_cookies(self.__cookies)

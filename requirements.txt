@@ -4,7 +4,7 @@ bs4==0.0.1
 certifi==2019.6.16
 cffi==1.12.3
 chardet==3.0.4
-configparser==3.8.1
+configparser==4.0.1
 cryptography==2.7
 idna==2.8
 jeepney==0.4.1

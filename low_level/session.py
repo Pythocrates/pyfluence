@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from functools import partial
 import shutil
 
 from http.cookiejar import CookiePolicy
 import requests
-
-from .rest_wrapper import RESTWrapper
 
 
 class Session:
@@ -22,11 +19,7 @@ class Session:
         rfc2965 = False
         netscape = True
 
-    def __init__(self, host, auth, subdomains=None, *args, **kwargs):
-        '''
-        subdomains map the functionality to the subdomain namem e.g.
-        {'bitbucket': 'bitbucket'}
-        '''
+    def __init__(self, auth, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.__session = requests.Session()
         self.__session.auth = auth()

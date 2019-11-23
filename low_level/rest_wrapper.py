@@ -33,7 +33,7 @@ class RESTWrapper:
         else:
             response = request_function(http_request_uri='/'.join([self.__host] + self.__path[:-1]), **kwargs)
             try:
-                assert(response.status_code == 200)
+                assert(response.status_code // 100 == 2)
             except AssertionError:
                 print(response.__dict__)
                 raise

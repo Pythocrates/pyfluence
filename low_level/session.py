@@ -6,11 +6,6 @@ import shutil
 from http.cookiejar import CookiePolicy
 import requests
 
-from .authentication import (
-    ChromiumSessionCookieAuth,
-    FirefoxSessionCookieAuth,
-    KerberosSessionCookieAuth
-)
 from .rest_wrapper import RESTWrapper
 
 
@@ -86,11 +81,13 @@ class Session:
 
     @classmethod
     def from_firefox(cls, host, subdomains=None):
+        from .authentication.firefox import FirefoxSessionCookieAuth
         return cls(
             host=host, subdomains=subdomains, auth=FirefoxSessionCookieAuth)
 
     @classmethod
     def from_chromium(cls, host, subdomains=None):
+        from .authentication.chromium import ChromiumSessionCookieAuth
         return cls(
             host=host, subdomains=subdomains, auth=ChromiumSessionCookieAuth)
 
@@ -100,6 +97,7 @@ class Session:
         Negotiate using Kerberos. auth_subdomain determines which subdomain
         does the authentication.
         '''
+        from .authentication.kerberos import KerberosSessionCookieAuth
         return cls(
             host=host,
             subdomains=subdomains,

@@ -13,6 +13,11 @@ class App:
         return self.__session
 
     @classmethod
+    def from_environment_cookie(cls, host):
+        session = Session.from_environment_cookie(host=host)
+        return cls.from_session(session=session)
+
+    @classmethod
     def from_chromium(cls, host):
         session = Session.from_chromium(host=host)
         return cls.from_session(session=session)

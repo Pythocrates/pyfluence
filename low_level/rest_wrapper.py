@@ -10,10 +10,6 @@ class RESTWrapper:
         self.__path = path
         self.__session = session
 
-    @property
-    def host(self):
-        return self.__host
-
     def __getattr__(self, path):
         return self.__class__(host=self.__host, path=self.__path + [path], session=self.__session)
 

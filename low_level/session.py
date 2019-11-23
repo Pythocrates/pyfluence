@@ -11,11 +11,10 @@ from .rest_wrapper import RESTWrapper
 
 class Session:
     class NoCookies(CookiePolicy):
-        ''' A cookie policy blocking any cookies, thus enabling us to
-        use request.prepare_cookies, which does not overwrite existing
-        cookie headers.
-        Look for "How to disable cookie handling with the Python requests
-        library" on StackOverflow. No copy/paste with Exceed & Citrix...
+        ''' A cookie policy blocking any cookies, thus enabling us to use
+        request.prepare_cookies, which does not overwrite existing cookie
+        headers.
+        See: https://stackoverflow.com/a/21714597.
         '''
         def set_ok(self, cookie, request):
             return False
@@ -33,92 +32,6 @@ class Session:
         self.__session.auth = auth()
         self.__session.cookies.set_policy(self.NoCookies())
         self.__session.verify = False  # TODO: change this?
-        subdomains = subdomains or {}
-
-        # TODO: resolve subdomain + host
-        # TODO: refactoring: move specific URLs out of Session
-        self.__bitbucket = RESTWrapper(
-            host='https://{}.{}'.format(
-                subdomains.get('bitbucket', 'bitbucket'),
-                host
-            ),
-            path=['rest', 'api', '1.0'],
-            session=self)
-        self.__bitbucket_keys = RESTWrapper(
-            host='https://{}.{}'.format(
-                subdomains.get('bitbucket', 'bitbucket'),
-                host
-            ),
-            path=['rest', 'keys', '1.0'],
-            session=self)
-        self.__bitbucket_ssh = RESTWrapper(
-            host='https://{}.{}'.format(
-                subdomains.get('bitbucket', 'bitbucket'),
-                host
-            ),
-            path=['rest', 'ssh', '1.0'],
-            session=self)
-        self.__jira = RESTWrapper(
-            host='https://{}.{}'.format(
-                subdomains.get('jira', 'jira'),
-                host
-            ),
-            path=['rest', 'api', '2'],
-            session=self)
-        self.__wiki = RESTWrapper(
-            host='https://{}.{}'.format(
-                subdomains.get('confluence', 'confluence'),
-                host
-            ),
-            path=['rest', 'api'],
-            session=self)
-
-    bitbucket = property(lambda self: self.__bitbucket)
-    bitbucket_keys = property(lambda self: self.__bitbucket_keys)
-    bitbucket_ssh = property(lambda self: self.__bitbucket_ssh)
-    jira = property(lambda self: self.__jira)
-    wiki = property(lambda self: self.__wiki)
-
-    @classmethod
-    def from_environment_cookie(cls, host, subdomains=None):
-        from .authentication.environment_cookie import EnvironmentCookieAuth
-        return cls(
-            host=host, subdomains=subdomains, auth=EnvironmentCookieAuth)
-
-    @classmethod
-    def from_firefox(cls, host, subdomains=None):
-        from .authentication.firefox import FirefoxSessionCookieAuth
-        return cls(
-            host=host, subdomains=subdomains, auth=FirefoxSessionCookieAuth)
-
-    @classmethod
-    def from_chromium(cls, host, subdomains=None):
-        from .authentication.chromium import ChromiumSessionCookieAuth
-        return cls(
-            host=host, subdomains=subdomains, auth=ChromiumSessionCookieAuth)
-
-    @classmethod
-    def from_kerberos(cls, host, auth_subdomain, subdomains=None):
-        '''
-        Negotiate using Kerberos. auth_subdomain determines which subdomain
-        does the authentication.
-        '''
-        from .authentication.kerberos import KerberosSessionCookieAuth
-        return cls(
-            host=host,
-            subdomains=subdomains,
-            #auth=requests_kerberos.HTTPKerberosAuth)
-            auth=partial(KerberosSessionCookieAuth, subdomain=auth_subdomain))
-
-    @classmethod
-    def from_functional_user(cls, host, username, password, subdomains=None):
-        return cls(
-            host=host,
-            subdomains=subdomains,
-            auth=partial(
-                requests.auth.HTTPBasicAuth,
-                username=username,
-                password=password))
 
     @staticmethod
     def __compile_uri(base, **kwargs):

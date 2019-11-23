@@ -36,8 +36,7 @@ class Session:
     @staticmethod
     def __compile_uri(base, **kwargs):
         if kwargs:
-            return base + '?' + '&'.join(
-                '{k}={v}'.format(k=k, v=v) for k, v in kwargs.items())
+            return base + '?' + '&'.join(f'{k}={v}' for k, v in kwargs.items())
         else:
             return str(base)
 
@@ -48,10 +47,6 @@ class Session:
         the requests module.
         '''
         requests_params = _requests_params or dict()
-        print('request_params:')
-        print(requests_params)
-        print('uri:')
-        print(self.__compile_uri(http_request_uri, **kwargs))
         return self.__session.get(
             self.__compile_uri(http_request_uri, **kwargs), **requests_params)
 

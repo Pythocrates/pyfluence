@@ -11,7 +11,10 @@ class RESTWrapper:
         self.__session = session
 
     def __getattr__(self, path):
-        return self.__class__(host=self.__host, path=self.__path + [path], session=self.__session)
+        return self.__class__(
+            host=self.__host,
+            path=self.__path + [path],
+            session=self.__session)
 
     def __getitem__(self, path):
         return getattr(self, str(path))
@@ -27,7 +30,9 @@ class RESTWrapper:
         except KeyError:
             raise UnknownHTTPRequestError(self.__path[-1])
         else:
-            response = request_function(http_request_uri='/'.join([self.__host] + self.__path[:-1]), **kwargs)
+            response = request_function(
+                http_request_uri='/'.join([self.__host] + self.__path[:-1]),
+                **kwargs)
             try:
                 assert(response.status_code // 100 == 2)
             except AssertionError:

@@ -9,7 +9,7 @@ cryptography==2.8
 idna==2.8
 jeepney==0.4.2
 Naked==0.1.31
-pycparser==2.19
+pycparser==2.20
 pycrypto==2.6.1
 pykerberos==1.2.1
 PyYAML==5.3

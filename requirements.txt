@@ -18,5 +18,5 @@ requests-kerberos==0.12.0
 SecretStorage==3.1.2
 shellescape==3.8.1
 six==1.14.0
-soupsieve==1.9.5
+soupsieve==2.1
 urllib3==1.25.8

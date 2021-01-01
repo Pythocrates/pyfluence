@@ -6,7 +6,7 @@ cffi==1.13.2
 chardet==3.0.4
 configparser==4.0.2
 cryptography==2.8
-idna==2.8
+idna==3.0
 jeepney==0.4.2
 Naked==0.1.31
 pycparser==2.19

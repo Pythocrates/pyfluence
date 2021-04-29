@@ -1,0 +1,19 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "07:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: soupsieve
+    versions:
+    - "2.1"
+    - "2.2"
+  - dependency-name: cffi
+    versions:
+    - 1.14.4
+  - dependency-name: configparser
+    versions:
+    - 5.0.1
